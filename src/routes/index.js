@@ -7,6 +7,8 @@ import Login from "../Components/Login/Login";
 import Dashboard from "../Components/Dashboard/Dashboard";
 import AdminProperty from "../Components/Properties/AdminProperty";
 import AdminProperties from "../Components/Properties/AdminProperties";
+import Reviews from "../Components/Admin/Reviews";
+import Messages from "../Components/Admin/Messages";
 // const Home = Loadable(lazy(() => import("../Components/Home/Home")));
 
 export default function ROUTES() {
@@ -30,6 +32,24 @@ export default function ROUTES() {
           element={
             <MinimalLayout>
               <AdminProperties />
+            </MinimalLayout>
+          }
+        />
+        <Route
+          exact
+          path="reviews"
+          element={
+            <MinimalLayout>
+              <Reviews />
+            </MinimalLayout>
+          }
+        />
+        <Route
+          exact
+          path="messages"
+          element={
+            <MinimalLayout>
+              <Messages />
             </MinimalLayout>
           }
         />

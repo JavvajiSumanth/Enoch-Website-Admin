@@ -43,7 +43,7 @@ const AdminProperties = ({ edit }) => {
     >
       <Grid container spacing={2} rowSpacing={3}>
         {properties.map((property, idx) => (
-          <Grid key={idx} item xs={12} sm={6} md={4}>
+          <Grid key={idx} item xs={12} md={6} lg={4}>
             <Paper elevation={2}>
               <Post property={property} setProperties={setProperties} />
             </Paper>
@@ -84,6 +84,7 @@ function Post({ property, setProperties }) {
             sx={{
               p: 2,
               pt: 0,
+              minHeight: "360px",
             }}
           >
             <Typography variant="subtitle1" component="div">
@@ -139,7 +140,15 @@ function Post({ property, setProperties }) {
 
             <div
               className="truncate"
-              dangerouslySetInnerHTML={{ __html: property.about }}
+              dangerouslySetInnerHTML={{
+                __html:
+                  property.about.substr(
+                    0,
+                    property.about.length > 300
+                      ? 300
+                      : property.about.length - 20
+                  ) + "...",
+              }}
             />
 
             <Box

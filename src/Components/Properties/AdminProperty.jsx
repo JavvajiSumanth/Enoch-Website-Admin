@@ -162,6 +162,7 @@ const AdminProperty = () => {
   const createProperty = async (courseObj) => {
     const genratedID = uniqid();
     courseObj.id = genratedID;
+    courseObj.date = new Date();
 
     const courseRef = doc(db, "properties", genratedID);
     await setDoc(courseRef, courseObj);

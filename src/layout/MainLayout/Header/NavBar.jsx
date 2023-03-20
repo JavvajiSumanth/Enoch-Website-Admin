@@ -110,6 +110,56 @@ export default function AccountMenu() {
               </Link>
             </Button>
           </Tooltip>
+          <Tooltip title="Reviews">
+            <Button
+              variant="text"
+              sx={{
+                ml: 2,
+                display: {
+                  xs: "none",
+                  md: "initial",
+                },
+              }}
+            >
+              <Link
+                to={"reviews"}
+                style={{
+                  color: "#000",
+                  fontWeight: "500",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                  mr: "auto",
+                }}
+              >
+                reviews
+              </Link>
+            </Button>
+          </Tooltip>
+          <Tooltip title="Messages">
+            <Button
+              variant="text"
+              sx={{
+                ml: 2,
+                display: {
+                  xs: "none",
+                  md: "initial",
+                },
+              }}
+            >
+              <Link
+                to={"messages"}
+                style={{
+                  color: "#000",
+                  fontWeight: "500",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                  mr: "auto",
+                }}
+              >
+                messages
+              </Link>
+            </Button>
+          </Tooltip>
           <Tooltip title="Account settings">
             <IconButton
               onClick={handleClick}
