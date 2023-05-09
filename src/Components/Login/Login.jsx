@@ -17,19 +17,24 @@ import LoginImg from "../../assets/pictures/login.svg";
 import { AuthContext } from "../../context/AuthContext";
 
 const Login = () => {
-  const { login, error } = useContext(AuthContext);
+  const { login, error, setErrorMessage } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handelSubmit = (e) => {
     e.preventDefault();
-    Promise.all([login({ email, password })]).then((data) => {
-      if (!!data[0]) {
-        // handleClose();
-      }
-      console.log("All promises have resolved");
-    });
+
+    if (email === "admin@admin.com" && password === "admin123") {
+      Promise.all([login({ email, password })]).then((data) => {
+        if (!!data[0]) {
+          // handleClose();
+        }
+        console.log("All promises have resolved");
+      });
+    } else {
+      setErrorMessage("Invalid Credentials");
+    }
   };
 
   return (

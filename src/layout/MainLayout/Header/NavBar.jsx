@@ -36,129 +36,145 @@ export default function AccountMenu() {
           }}
         >
           <Tooltip title="Home">
-            <Button
-              variant="text"
-              sx={{
-                ml: 2,
-                display: {
-                  xs: "none",
-                  md: "initial",
-                },
+            <Link
+              to={"/"}
+              style={{
+                color: "#000",
+                fontWeight: "500",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                mr: "auto",
               }}
             >
-              <Link
-                to={"/"}
-                style={{
-                  color: "#000",
-                  fontWeight: "500",
+              <Button
+                variant="text"
+                sx={{
+                  ml: 2,
                   textTransform: "uppercase",
-                  textDecoration: "none",
-                  mr: "auto",
+                  letterSpacing: 1,
+                  color: "#000",
+                  display: {
+                    xs: "none",
+                    md: "initial",
+                  },
                 }}
               >
                 Home
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </Tooltip>
-          <Tooltip title="New Property">
-            <Button
-              variant="text"
-              sx={{
-                ml: 2,
-                display: {
-                  xs: "none",
-                  md: "initial",
-                },
+          {/* <Tooltip title="New Property">
+            <Link
+              to={"property"}
+              style={{
+                color: "#000",
+                fontWeight: "500",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                mr: "auto",
               }}
             >
-              <Link
-                to={"property"}
-                style={{
-                  color: "#000",
-                  fontWeight: "500",
+              <Button
+                variant="text"
+                sx={{
+                  ml: 2,
                   textTransform: "uppercase",
-                  textDecoration: "none",
-                  mr: "auto",
+                  letterSpacing: 1,
+                  color: "#000",
+                  display: {
+                    xs: "none",
+                    md: "initial",
+                  },
                 }}
               >
                 New Property
-              </Link>
-            </Button>
-          </Tooltip>
+              </Button>
+            </Link>
+          </Tooltip> */}
           <Tooltip title="Properties">
-            <Button
-              variant="text"
-              sx={{
-                ml: 2,
-                display: {
-                  xs: "none",
-                  md: "initial",
-                },
+            <Link
+              to={"properties"}
+              style={{
+                color: "#000",
+                fontWeight: "500",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                mr: "auto",
               }}
             >
-              <Link
-                to={"properties"}
-                style={{
-                  color: "#000",
-                  fontWeight: "500",
+              <Button
+                variant="text"
+                sx={{
+                  ml: 2,
                   textTransform: "uppercase",
-                  textDecoration: "none",
-                  mr: "auto",
+                  letterSpacing: 1,
+                  color: "#000",
+                  display: {
+                    xs: "none",
+                    md: "initial",
+                  },
                 }}
               >
                 properties
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </Tooltip>
           <Tooltip title="Reviews">
-            <Button
-              variant="text"
-              sx={{
-                ml: 2,
-                display: {
-                  xs: "none",
-                  md: "initial",
-                },
+            <Link
+              to={"reviews"}
+              style={{
+                color: "#000",
+                fontWeight: "500",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                mr: "auto",
               }}
             >
-              <Link
-                to={"reviews"}
-                style={{
-                  color: "#000",
-                  fontWeight: "500",
+              <Button
+                variant="text"
+                sx={{
+                  ml: 2,
                   textTransform: "uppercase",
-                  textDecoration: "none",
-                  mr: "auto",
+                  letterSpacing: 1,
+                  color: "#000",
+                  display: {
+                    xs: "none",
+                    md: "initial",
+                  },
                 }}
               >
                 reviews
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </Tooltip>
           <Tooltip title="Messages">
-            <Button
-              variant="text"
-              sx={{
-                ml: 2,
-                display: {
-                  xs: "none",
-                  md: "initial",
-                },
+            <Link
+              to={"messages"}
+              style={{
+                color: "#000",
+                fontWeight: "500",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                mr: "auto",
               }}
             >
-              <Link
-                to={"messages"}
-                style={{
-                  color: "#000",
-                  fontWeight: "500",
+              {" "}
+              <Button
+                variant="text"
+                sx={{
+                  ml: 2,
                   textTransform: "uppercase",
-                  textDecoration: "none",
-                  mr: "auto",
+                  letterSpacing: 1,
+                  color: "#000",
+                  display: {
+                    xs: "none",
+                    md: "initial",
+                  },
                 }}
               >
                 messages
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </Tooltip>
           <Tooltip title="Account settings">
             <IconButton

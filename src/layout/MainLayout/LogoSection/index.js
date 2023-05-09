@@ -10,8 +10,7 @@ import Logo from "../../../Helpers/Logo";
 
 const LogoSection = () => (
   <ButtonBase disableRipple component={Link} to={"/"}>
-    {/* <Logo size={180} /> */}
-    ENOCH
+    <Logo size={150} />
   </ButtonBase>
 );
 

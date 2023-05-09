@@ -27,6 +27,7 @@ import {
   MoreVert,
   Place,
   SquareFoot,
+  Visibility,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
@@ -84,7 +85,6 @@ function Post({ property, setProperties }) {
             sx={{
               p: 2,
               pt: 0,
-              minHeight: "360px",
             }}
           >
             <Typography variant="subtitle1" component="div">
@@ -137,43 +137,20 @@ function Post({ property, setProperties }) {
               </Typography>{" "}
               <Map color="primary" />
             </Stack>
-
-            <div
-              className="truncate"
-              dangerouslySetInnerHTML={{
-                __html:
-                  property.about.substr(
-                    0,
-                    property.about.length > 300
-                      ? 300
-                      : property.about.length - 20
-                  ) + "...",
-              }}
-            />
-
             <Box
               sx={{
                 mt: 3,
-                display: "flex",
-                justifyContent: "space-between",
               }}
             >
               <Button
-                startIcon={<Edit />}
+                fullWidth
+                startIcon={<Visibility />}
                 onClick={() => {
-                  navigate(`/property/${property.id}`);
+                  navigate(`/view/${property.id}`);
                 }}
-                variant="outlined"
+                variant="contained"
               >
-                Edit Property
-              </Button>
-              <Button
-                startIcon={<Delete />}
-                onClick={handelDelete}
-                variant="outlined"
-                color="error"
-              >
-                Delete Property
+                View Property
               </Button>
             </Box>
           </Box>

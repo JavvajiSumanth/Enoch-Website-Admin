@@ -27,7 +27,10 @@ const Header = ({ handleLeftDrawerToggle }) => {
           },
         }}
       >
-        <Box component="span" sx={{ flexGrow: 1, mr: 2 }}>
+        <Box
+          component="span"
+          sx={{ flexGrow: 1, mr: 2, position: "absolute", top: 12 }}
+        >
           <LogoSection />
         </Box>
 

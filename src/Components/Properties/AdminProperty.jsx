@@ -30,6 +30,7 @@ import { doc, setDoc } from "firebase/firestore";
 import uniqid from "uniqid";
 import { AuthContext } from "../../context/AuthContext";
 import Drop from "./DropZone/Drop";
+import { Autocomplete } from "@react-google-maps/api";
 
 const modules = {
   toolbar: [
@@ -52,7 +53,7 @@ const AdminProperty = () => {
   const [images, setImages] = useState([]);
 
   const [about, setAbout] = useState("");
-  const { properties, setProperties } = useContext(AuthContext);
+  const { properties, setProperties, user } = useContext(AuthContext);
 
   const scriptedRef = useScriptRef();
 
@@ -66,6 +67,7 @@ const AdminProperty = () => {
       if (property) {
         setProperty(property);
         setAbout(property.about);
+        setLocation(property.location);
         setImages(
           property.images.map((image, idx) => ({
             src: image,
@@ -80,7 +82,7 @@ const AdminProperty = () => {
       setProperty(null);
       setAbout("");
       setImages([]);
-      console.log("Create Property Page");
+      console.log("Create Property Page", user);
     }
   }, [propertyId, properties]);
 
@@ -89,6 +91,7 @@ const AdminProperty = () => {
   const [loading, setLoading] = useState(false);
   const [updated, setUpdated] = useState(false);
   const handelFormSubmit = async (values) => {
+    console.log(user);
     setLoading(true);
     try {
       const propertyObj = {
@@ -115,11 +118,13 @@ const AdminProperty = () => {
         }
       }
       propertyObj.images = pics;
-      console.log(propertyObj, uploadingImages);
+      propertyObj.location = location;
+
       if (propertyId) {
         propertyObj.id = property.id;
         await updateProperty(propertyObj);
       } else {
+        propertyObj.OWNER = user;
         await createProperty(propertyObj);
       }
       setUpdated(true);
@@ -146,35 +151,40 @@ const AdminProperty = () => {
     }
     return url;
   };
-  const updateProperty = async (courseObj) => {
+  const updateProperty = async (propObj) => {
     const courseRef = doc(db, "properties", propertyId);
 
-    await setDoc(courseRef, courseObj, { merge: true });
+    await setDoc(courseRef, propObj, { merge: true });
 
     const updatedProperties = properties.map((property) => {
-      if (property.id === courseObj.id) {
-        return courseObj;
+      if (property.id === propObj.id) {
+        return { ...property, ...propObj };
       } else return property;
     });
+    console.log(updatedProperties);
     setProperties(updatedProperties);
   };
 
-  const createProperty = async (courseObj) => {
+  const createProperty = async (propObj) => {
     const genratedID = uniqid();
-    courseObj.id = genratedID;
-    courseObj.date = new Date();
+    propObj.id = genratedID;
+    propObj.date = new Date();
 
     const courseRef = doc(db, "properties", genratedID);
-    await setDoc(courseRef, courseObj);
+    await setDoc(courseRef, propObj);
 
-    setProperties((properties) => [...properties, courseObj]);
+    setProperties((properties) => [...properties, propObj]);
   };
-  // useEffect(() => {
-  //   data.forEach((el) => {
-  //     createCourse(el);
-  //   });
-  // }, []);
+  const [location, setLocation] = useState(null);
+  const [autocomplete, setAutocomplete] = useState(null);
 
+  const onLoad = (autoC) => {
+    setAutocomplete(autoC);
+  };
+
+  const onPlaceChanged = () => {
+    setLocation(autocomplete.getPlace().formatted_address);
+  };
   return (
     <Box
       sx={{
@@ -199,7 +209,6 @@ const AdminProperty = () => {
             sft: property?.sft || "",
             beds: property?.beds || "",
             bath: property?.bath || "",
-            location: property?.location || "",
             mapLink: property?.mapLink || "",
             propertyType: property?.propertyType || "",
             pets: property?.pets || "",
@@ -212,7 +221,6 @@ const AdminProperty = () => {
             sft: Yup.number().required("SFT is required"),
             beds: Yup.number().required("Beds count is required"),
             bath: Yup.number().required("Bathroom count is required"),
-            location: Yup.string().min(3).required("Location is required"),
             mapLink: Yup.string().required("Maps Link is required"),
             propertyType: Yup.string().required(
               "Property Type Feild is required"
@@ -476,10 +484,7 @@ const AdminProperty = () => {
                       onChange={handleChange}
                     >
                       <MenuItem value={"Dogs Allowed"}>Dogs Allowed</MenuItem>
-                      <MenuItem value={"Cats Allowed"}>Cats Allowed</MenuItem>
-                      <MenuItem value={"Dogs & Cats Allowed"} selected>
-                        Dogs & Cats Allowed
-                      </MenuItem>
+
                       <MenuItem value={"No Pets Allowed"}>
                         No Pets Allowed
                       </MenuItem>
@@ -496,29 +501,28 @@ const AdminProperty = () => {
                   </FormControl>
                 </Grid>
               </Grid>
-              <FormControl
-                fullWidth
-                error={Boolean(touched.location && errors.location)}
-                sx={{ ...theme.typography.customInput }}
-              >
-                <InputLabel htmlFor="outlined-adornment-email-register">
-                  Location
-                </InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-email-register"
-                  type="text"
-                  value={values.location}
-                  name="location"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  inputProps={{}}
-                />
-                {touched.location && errors.location && (
+              <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
+                <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+                  <OutlinedInput
+                    id="outlined-adornment-email-register"
+                    type="text"
+                    value={location}
+                    onChange={(e) => {
+                      setLocation(e.target.value);
+                    }}
+                    name="location"
+                    onBlur={handleBlur}
+                    inputProps={{}}
+                    fullWidth
+                  />
+                </Autocomplete>
+
+                {location?.length <= 0 && (
                   <FormHelperText
                     error
                     id="standard-weight-helper-text--register"
                   >
-                    {errors.location}
+                    Required
                   </FormHelperText>
                 )}
               </FormControl>
@@ -634,7 +638,7 @@ const AdminProperty = () => {
                     variant="contained"
                     color="info"
                     onClick={() => {
-                      navigate(-1);
+                      navigate("/");
                     }}
                   >
                     Go Back

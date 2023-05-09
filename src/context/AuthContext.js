@@ -99,6 +99,7 @@ export const AuthProvider = ({ children }) => {
         error,
         properties,
         setProperties,
+        setErrorMessage,
       }}
     >
       {!isLoading ? children : <Loader />}

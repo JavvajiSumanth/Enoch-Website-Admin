@@ -26,3 +26,20 @@ export const appendImage = async (URL, genratedID) => {
     selected: false,
   });
 };
+export const blockUser = async (uid, status, propertyId, role) => {
+  const userRef = doc(db, "users", uid);
+  await updateDoc(userRef, {
+    block: status,
+  });
+  const propertyRef = doc(db, "properties", propertyId);
+  await updateDoc(
+    propertyRef,
+    role === "OWNER"
+      ? {
+          isOwnerBlocked: status,
+        }
+      : {
+          isTenantBlocked: status,
+        }
+  );
+};
