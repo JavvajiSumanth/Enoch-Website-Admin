@@ -63,7 +63,7 @@ export default function AccountMenu() {
               </Button>
             </Link>
           </Tooltip>
-          {/* <Tooltip title="New Property">
+          <Tooltip title="New Property">
             <Link
               to={"property"}
               style={{
@@ -90,7 +90,7 @@ export default function AccountMenu() {
                 New Property
               </Button>
             </Link>
-          </Tooltip> */}
+          </Tooltip>
           <Tooltip title="Properties">
             <Link
               to={"properties"}
@@ -176,6 +176,35 @@ export default function AccountMenu() {
               </Button>
             </Link>
           </Tooltip>
+          <Tooltip title="Requests">
+            <Link
+              to={"requests"}
+              style={{
+                color: "#000",
+                fontWeight: "500",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                mr: "auto",
+              }}
+            >
+              <Button
+                variant="text"
+                sx={{
+                  ml: 2,
+                  textTransform: "uppercase",
+                  letterSpacing: 1,
+                  color: "#000",
+                  display: {
+                    xs: "none",
+                    md: "initial",
+                  },
+                }}
+              >
+                requests
+              </Button>
+            </Link>
+          </Tooltip>
+
           <Tooltip title="Account settings">
             <IconButton
               onClick={handleClick}

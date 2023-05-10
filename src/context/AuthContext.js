@@ -52,7 +52,13 @@ export const AuthProvider = ({ children }) => {
     const subscription = onAuthStateChanged(auth, (user) => {
       if (user != null) {
         setIsAuthenticated(true);
-        setUser(user);
+        setUser({
+          uid: user.uid,
+          email: user.email,
+          firstName: "Admin",
+          lastName: "Admin",
+          role: "ADMIN",
+        });
       } else {
         setIsAuthenticated(false);
         console.log("😢 We are not authenticated!");

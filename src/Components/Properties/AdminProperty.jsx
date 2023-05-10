@@ -82,7 +82,6 @@ const AdminProperty = () => {
       setProperty(null);
       setAbout("");
       setImages([]);
-      console.log("Create Property Page", user);
     }
   }, [propertyId, properties]);
 
@@ -90,6 +89,7 @@ const AdminProperty = () => {
 
   const [loading, setLoading] = useState(false);
   const [updated, setUpdated] = useState(false);
+
   const handelFormSubmit = async (values) => {
     console.log(user);
     setLoading(true);

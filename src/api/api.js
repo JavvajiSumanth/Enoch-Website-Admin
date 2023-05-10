@@ -43,3 +43,11 @@ export const blockUser = async (uid, status, propertyId, role) => {
         }
   );
 };
+
+export const updatePropertyWithTenant = async (propertyId, TENANT) => {
+  const propertyRef = doc(db, "properties", propertyId);
+  await updateDoc(propertyRef, {
+    TENANT: TENANT,
+    hideProperty: true,
+  });
+};

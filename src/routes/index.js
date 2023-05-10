@@ -1,15 +1,13 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { lazy } from "react";
-import Loadable from "../Helpers/Loadable";
 import MinimalLayout from "../layout/MinimalLayout";
 import MainLayout from "../layout/MainLayout";
 import Login from "../Components/Login/Login";
-import Dashboard from "../Components/Dashboard/Dashboard";
 import AdminProperty from "../Components/Properties/AdminProperty";
 import AdminProperties from "../Components/Properties/AdminProperties";
 import Reviews from "../Components/Admin/Reviews";
 import Messages from "../Components/Admin/Messages";
 import ViewProperty from "../Components/Properties/ViewProperty";
+import Requests from "../Components/Properties/Requests";
 // const Home = Loadable(lazy(() => import("../Components/Home/Home")));
 
 export default function ROUTES() {
@@ -17,7 +15,6 @@ export default function ROUTES() {
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route exact path="/login" element={<Login />} />
-
         <Route
           exact
           path="/"
@@ -54,7 +51,7 @@ export default function ROUTES() {
             </MinimalLayout>
           }
         />
-        {/* <Route
+        <Route
           exact
           path="property"
           element={
@@ -62,7 +59,7 @@ export default function ROUTES() {
               <AdminProperty />
             </MinimalLayout>
           }
-        /> */}
+        />
         <Route
           exact
           path="property/:propertyId"
@@ -78,6 +75,15 @@ export default function ROUTES() {
           element={
             <MinimalLayout>
               <ViewProperty />
+            </MinimalLayout>
+          }
+        />
+        <Route
+          exact
+          path="requests"
+          element={
+            <MinimalLayout>
+              <Requests />
             </MinimalLayout>
           }
         />

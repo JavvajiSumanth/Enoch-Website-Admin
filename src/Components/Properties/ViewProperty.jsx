@@ -269,17 +269,6 @@ const ViewProperty = () => {
                         {property.TENANT?.email}
                       </span>{" "}
                     </Typography>
-                    <Typography variant="subtitle1" component="div">
-                      Name:{" "}
-                      <span
-                        style={{
-                          fontSize: 16,
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {property.TENANT?.phone}
-                      </span>{" "}
-                    </Typography>
 
                     <Switch
                       checked={tenantBlocked}
@@ -318,50 +307,66 @@ const ViewProperty = () => {
                 >
                   Owner Details
                 </Typography>
-                <Box>
-                  <Typography variant="subtitle1" component="div">
-                    Name:{" "}
-                    <span
-                      style={{
-                        fontSize: 16,
-                        fontWeight: "bold",
+                {property.OWNER.role === "ADMIN" ? (
+                  <Box>
+                    <Typography variant="subtitle1" component="div">
+                      Name:{" "}
+                      <span
+                        style={{
+                          fontSize: 16,
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {property.OWNER.firstName}
+                      </span>{" "}
+                    </Typography>
+                  </Box>
+                ) : (
+                  <Box>
+                    <Typography variant="subtitle1" component="div">
+                      Name:{" "}
+                      <span
+                        style={{
+                          fontSize: 16,
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {property.OWNER.firstName} {property.OWNER.lastName}
+                      </span>{" "}
+                    </Typography>
+                    <Typography variant="subtitle1" component="div">
+                      Email:{" "}
+                      <span
+                        style={{
+                          fontSize: 16,
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {property.OWNER.email}
+                      </span>{" "}
+                    </Typography>
+                    {/* <Typography variant="subtitle1" component="div">
+                      Phone:{" "}
+                      <span
+                        style={{
+                          fontSize: 16,
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {property.OWNER.phone || "-"}
+                      </span>{" "}
+                    </Typography> */}
+                    <Typography variant="subtitle1" component="span">
+                      {ownerBlocked ? "Unblock Owner" : "Block Owner"}
+                    </Typography>
+                    <Switch
+                      checked={ownerBlocked}
+                      onChange={(e) => {
+                        ownerChange(e, property.OWNER.uid);
                       }}
-                    >
-                      {property.OWNER.firstName} {property.OWNER.lastName}
-                    </span>{" "}
-                  </Typography>
-                  <Typography variant="subtitle1" component="div">
-                    Email:{" "}
-                    <span
-                      style={{
-                        fontSize: 16,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {property.OWNER.email}
-                    </span>{" "}
-                  </Typography>
-                  <Typography variant="subtitle1" component="div">
-                    Phone:{" "}
-                    <span
-                      style={{
-                        fontSize: 16,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {property.OWNER.phone || "-"}
-                    </span>{" "}
-                  </Typography>
-                  <Typography variant="subtitle1" component="span">
-                    {ownerBlocked ? "Unblock Owner" : "Block Owner"}
-                  </Typography>
-                  <Switch
-                    checked={ownerBlocked}
-                    onChange={(e) => {
-                      ownerChange(e, property.OWNER.uid);
-                    }}
-                  />
-                </Box>
+                    />
+                  </Box>
+                )}
               </Card>
             </Grid>
             <Grid item xs={12}>
