@@ -91,6 +91,34 @@ export default function AccountMenu() {
               </Button>
             </Link>
           </Tooltip>
+          <Tooltip title="Old Property">
+            <Link
+              to={"old-property"}
+              style={{
+                color: "#000",
+                fontWeight: "500",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                mr: "auto",
+              }}
+            >
+              <Button
+                variant="text"
+                sx={{
+                  ml: 2,
+                  textTransform: "uppercase",
+                  letterSpacing: 1,
+                  color: "#000",
+                  display: {
+                    xs: "none",
+                    md: "initial",
+                  },
+                }}
+              >
+                Old Property
+              </Button>
+            </Link>
+          </Tooltip>
           <Tooltip title="Properties">
             <Link
               to={"properties"}

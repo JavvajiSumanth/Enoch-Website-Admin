@@ -87,6 +87,17 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
                   New Property
                 </Typography>
               </Link>
+              <Link to="old-property" className="sidebar-link">
+                <Typography
+                  sx={{
+                    color: "#000",
+                    fontWeight: "500",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Old Property
+                </Typography>
+              </Link>
               <Link to="properties" className="sidebar-link">
                 <Typography
                   sx={{
@@ -96,6 +107,39 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
                   }}
                 >
                   properties
+                </Typography>
+              </Link>
+              <Link to="reviews" className="sidebar-link">
+                <Typography
+                  sx={{
+                    color: "#000",
+                    fontWeight: "500",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  properties
+                </Typography>
+              </Link>
+              <Link to="messages" className="sidebar-link">
+                <Typography
+                  sx={{
+                    color: "#000",
+                    fontWeight: "500",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  messages
+                </Typography>
+              </Link>
+              <Link to="requests" className="sidebar-link">
+                <Typography
+                  sx={{
+                    color: "#000",
+                    fontWeight: "500",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  requests
                 </Typography>
               </Link>
             </>

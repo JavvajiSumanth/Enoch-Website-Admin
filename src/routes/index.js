@@ -8,6 +8,7 @@ import Reviews from "../Components/Admin/Reviews";
 import Messages from "../Components/Admin/Messages";
 import ViewProperty from "../Components/Properties/ViewProperty";
 import Requests from "../Components/Properties/Requests";
+import OldAdminProperty from "../Components/Properties/OldAdminProperty";
 // const Home = Loadable(lazy(() => import("../Components/Home/Home")));
 
 export default function ROUTES() {
@@ -57,6 +58,15 @@ export default function ROUTES() {
           element={
             <MinimalLayout>
               <AdminProperty />
+            </MinimalLayout>
+          }
+        />
+        <Route
+          exact
+          path="old-property"
+          element={
+            <MinimalLayout>
+              <OldAdminProperty />
             </MinimalLayout>
           }
         />

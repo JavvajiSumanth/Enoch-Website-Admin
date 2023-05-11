@@ -86,23 +86,7 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(month, date, rent) {
-  return { month, date, rent };
-}
-
-const rows = [
-  createData("April 23", "5th April", 1550.0),
-  createData("March 23", "3th Jan", 1550.0),
-  createData("Feburary 23", "2th Feburary", 1550.0),
-  createData("January 23", "4th January", 1550.0),
-  createData("December 23", "5th December", 1550.0),
-  createData("August 23", "2th August", 1550.0),
-  createData("Sepetember 23", "1th Sepetember", 1550.0),
-  createData("October 23", "5th October", 1550.0),
-  createData("November 23", "5th November", 1550.0),
-];
-
-export default function CustomPaginationActionsTable() {
+export default function CustomPaginationActionsTable({ rows }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(3);
 
@@ -132,8 +116,8 @@ export default function CustomPaginationActionsTable() {
           {(rowsPerPage > 0
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
-          ).map((row) => (
-            <TableRow key={row.month}>
+          ).map((row, idx) => (
+            <TableRow key={idx}>
               <TableCell component="th" scope="row">
                 {row.month}
               </TableCell>

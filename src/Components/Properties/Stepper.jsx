@@ -5,16 +5,29 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { useEffect } from "react";
+import { updateDoc } from "firebase/firestore";
+import { useRef } from "react";
+import { updateReport } from "../../api/api";
 
 const steps = ["Started", "In Progress", "Review"];
 
-export default function HorizontalLinearStepper({ hide }) {
-  const [activeStep, setActiveStep] = React.useState(1);
+export default function HorizontalLinearStepper({ hide, report, step }) {
+  const [activeStep, setActiveStep] = React.useState(report.status);
   const [skipped, setSkipped] = React.useState(new Set());
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    } else {
+      updateReport(report.id, activeStep);
+    }
+  }, [activeStep]);
 
   const handleNext = () => {
     let newSkipped = skipped;

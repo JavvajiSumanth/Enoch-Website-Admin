@@ -29,7 +29,7 @@ import {
 import Images from "./ImagesCarousel";
 import CustomPaginationActionsTable from "./Transactions";
 import HorizontalLinearStepper from "./Stepper";
-import { blockUser, deleteCourse } from "../../api/api";
+import { blockUser, deleteCourse, fetchTransaction } from "../../api/api";
 
 const ViewProperty = () => {
   const { propertyId } = useParams();
@@ -68,6 +68,19 @@ const ViewProperty = () => {
     }
   }, [propertyId, properties]);
 
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await fetchTransaction(propertyId);
+      console.log(data);
+      setRows(data?.rows || []);
+    }
+    if (propertyId) {
+      fetchData();
+    }
+  }, [propertyId]);
+
   const [reports, setReports] = useState([]);
 
   useEffect(() => {
@@ -77,7 +90,8 @@ const ViewProperty = () => {
     async function fetchData() {
       const querySnapshot = await getDocs(collection(db, "reports"));
       querySnapshot.forEach((doc) => {
-        fetchedProperties.push(doc.data());
+        if (doc.data().propertyId === propertyId)
+          fetchedProperties.push(doc.data());
       });
       setReports(fetchedProperties);
     }
@@ -369,67 +383,75 @@ const ViewProperty = () => {
                 )}
               </Card>
             </Grid>
-            <Grid item xs={12}>
-              <Card
-                elevation={3}
-                sx={{
-                  p: 2,
-                }}
-              >
-                <Typography
-                  variant="h4"
-                  gutterBottom
+            {rows?.length > 0 && (
+              <Grid item xs={12}>
+                <Card
+                  elevation={3}
                   sx={{
-                    color: "#1e88e5",
+                    p: 2,
                   }}
                 >
-                  Recent Payments
-                </Typography>
-                <CustomPaginationActionsTable />
-              </Card>
-            </Grid>
+                  <Typography
+                    variant="h4"
+                    gutterBottom
+                    sx={{
+                      color: "#1e88e5",
+                    }}
+                  >
+                    Recent Payments
+                  </Typography>
+                  <CustomPaginationActionsTable rows={rows} />
+                </Card>
+              </Grid>
+            )}
 
-            <Grid item xs={12}>
-              <Box
-                sx={{
-                  p: 2,
-                }}
-              >
-                <Typography
-                  variant="h4"
-                  gutterBottom
+            {reports.length > 0 && (
+              <Grid item xs={12}>
+                <Box
                   sx={{
-                    color: "#1e88e5",
+                    p: 2,
                   }}
                 >
-                  Maintanance Report
-                </Typography>
-                {reports?.map((report, idx) => (
-                  <Card elevation={3} sx={{ margin: "auto", my: 3 }} key={idx}>
-                    <Grid container>
-                      {report.images.length > 0 ? (
-                        <Grid item xs={6}>
-                          <Images images={report.images} />
+                  <Typography
+                    variant="h4"
+                    gutterBottom
+                    sx={{
+                      color: "#1e88e5",
+                    }}
+                  >
+                    Maintanance Report
+                  </Typography>
+                  {reports?.map((report, idx) => (
+                    <Card
+                      elevation={3}
+                      sx={{ margin: "auto", my: 3 }}
+                      key={idx}
+                    >
+                      <Grid container>
+                        {report.images.length > 0 ? (
+                          <Grid item xs={6}>
+                            <Images images={report.images} />
+                          </Grid>
+                        ) : null}
+                        <Grid
+                          item
+                          xs={6}
+                          sx={{
+                            p: 3,
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <Box>{report.about}</Box>
+                          <HorizontalLinearStepper report={report} />
                         </Grid>
-                      ) : null}
-                      <Grid
-                        item
-                        xs={6}
-                        sx={{
-                          p: 3,
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <Box>{report.about}</Box>
-                        <HorizontalLinearStepper />
                       </Grid>
-                    </Grid>
-                  </Card>
-                ))}
-              </Box>
-            </Grid>
+                    </Card>
+                  ))}
+                </Box>
+              </Grid>
+            )}
           </Grid>
         </Paper>
       ) : null}

@@ -2,6 +2,7 @@ import {
   arrayUnion,
   deleteDoc,
   doc,
+  getDoc,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -49,5 +50,23 @@ export const updatePropertyWithTenant = async (propertyId, TENANT) => {
   await updateDoc(propertyRef, {
     TENANT: TENANT,
     hideProperty: true,
+  });
+};
+export const fetchTransaction = async (uid) => {
+  const userRef = doc(db, "tranactions", uid);
+  const docSnap = await getDoc(userRef);
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
+
+    return docSnap.data();
+  } else {
+    // docSnap.data() will be undefined in this case
+    return null;
+  }
+};
+export const updateReport = async (reportId, status) => {
+  const propertyRef = doc(db, "reports", reportId);
+  await updateDoc(propertyRef, {
+    status,
   });
 };
