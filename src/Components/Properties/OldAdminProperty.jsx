@@ -111,7 +111,7 @@ const OldAdminProperty = () => {
         phone: values.tenantPhone,
         lastName: "",
         uid: "",
-        role: "OWNER",
+        role: "TENANT",
       };
       await createProperty(propertyObj);
       setUpdated(true);

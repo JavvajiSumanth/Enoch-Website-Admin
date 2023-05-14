@@ -6,13 +6,12 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useEffect } from "react";
-import { updateDoc } from "firebase/firestore";
 import { useRef } from "react";
-import { updateReport } from "../../api/api";
+import { updateReport, deleteReport } from "../../api/api";
 
 const steps = ["Started", "In Progress", "Review"];
 
-export default function HorizontalLinearStepper({ hide, report, step }) {
+export default function HorizontalLinearStepper({ hide, report, setReports }) {
   const [activeStep, setActiveStep] = React.useState(report.status);
   const [skipped, setSkipped] = React.useState(new Set());
 
@@ -47,7 +46,18 @@ export default function HorizontalLinearStepper({ hide, report, step }) {
   const handleReset = () => {
     setActiveStep(0);
   };
-
+  const handelDelete = async () => {
+    if (
+      window.confirm("Are you sure you want to delete this property?") === true
+    ) {
+      const data = await deleteReport(report.id);
+      if (data) {
+        setReports((properties) =>
+          properties.filter((crs) => crs.id !== report.id)
+        );
+      }
+    }
+  };
   return (
     <Box sx={{ width: "100%" }}>
       <Stepper activeStep={activeStep}>
@@ -116,6 +126,19 @@ export default function HorizontalLinearStepper({ hide, report, step }) {
           )}
         </React.Fragment>
       )}
+      <Button
+        sx={{
+          position: "absolute",
+          right: 7,
+          bottom: 7,
+        }}
+        variant="outlined"
+        size="small"
+        color="error"
+        onClick={handelDelete}
+      >
+        Delete
+      </Button>
     </Box>
   );
 }

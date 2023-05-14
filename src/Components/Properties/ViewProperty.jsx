@@ -424,7 +424,7 @@ const ViewProperty = () => {
                   {reports?.map((report, idx) => (
                     <Card
                       elevation={3}
-                      sx={{ margin: "auto", my: 3 }}
+                      sx={{ margin: "auto", my: 3, position: "relative" }}
                       key={idx}
                     >
                       <Grid container>
@@ -444,7 +444,10 @@ const ViewProperty = () => {
                           }}
                         >
                           <Box>{report.about}</Box>
-                          <HorizontalLinearStepper report={report} />
+                          <HorizontalLinearStepper
+                            report={report}
+                            setReports={setReports}
+                          />
                         </Grid>
                       </Grid>
                     </Card>
