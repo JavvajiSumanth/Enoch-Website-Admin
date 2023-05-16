@@ -126,19 +126,22 @@ export default function HorizontalLinearStepper({ hide, report, setReports }) {
           )}
         </React.Fragment>
       )}
-      <Button
+      <Box
         sx={{
-          position: "absolute",
-          right: 7,
-          bottom: 7,
+          width: "100%",
+          display: "flex",
+          justifyContent: "end",
         }}
-        variant="outlined"
-        size="small"
-        color="error"
-        onClick={handelDelete}
       >
-        Delete
-      </Button>
+        <Button
+          variant="outlined"
+          size="small"
+          color="error"
+          onClick={handelDelete}
+        >
+          Delete
+        </Button>
+      </Box>
     </Box>
   );
 }

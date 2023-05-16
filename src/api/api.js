@@ -79,3 +79,13 @@ export const deleteReport = async (reportId) => {
     return false;
   }
 };
+export const hidePropertyFn = async (propertyId, hideProperty) => {
+  try {
+    const propertyRef = doc(db, "properties", propertyId);
+
+    await updateDoc(propertyRef, { hideProperty });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};

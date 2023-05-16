@@ -8,20 +8,18 @@ import {
   Switch,
   Typography,
 } from "@mui/material";
-import { Box, useTheme } from "@mui/system";
+import { Box } from "@mui/system";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
-import useScriptRef from "../../Helpers/useScriptRef";
 import { db, storage } from "../../firebase/firebase";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { collection, doc, getDocs, setDoc } from "firebase/firestore";
-import uniqid from "uniqid";
 import { AuthContext } from "../../context/AuthContext";
 import {
   Bathroom,
   Bed,
   Delete,
+  HideSource,
   Map,
   SquareFoot,
   Visibility,
@@ -29,7 +27,12 @@ import {
 import Images from "./ImagesCarousel";
 import CustomPaginationActionsTable from "./Transactions";
 import HorizontalLinearStepper from "./Stepper";
-import { blockUser, deleteCourse, fetchTransaction } from "../../api/api";
+import {
+  blockUser,
+  deleteCourse,
+  fetchTransaction,
+  hidePropertyFn,
+} from "../../api/api";
 
 const ViewProperty = () => {
   const { propertyId } = useParams();
@@ -51,6 +54,7 @@ const ViewProperty = () => {
         setAbout(property.about);
         setOwnerBlocked(property.isOwnerBlocked || false);
         setTenantBlocked(property.isTenantBlocked || false);
+        setHideProperty(property.hideProperty || false);
         setImages(
           property.images.map((image, idx) => ({
             src: image,
@@ -110,8 +114,24 @@ const ViewProperty = () => {
       }
     }
   };
+  const handleHide = async () => {
+    if (
+      window.confirm(
+        `Are you sure you want to ${
+          hideProperty === true ? "Show" : "Hide"
+        } this property?`
+      ) === true
+    ) {
+      const data = await hidePropertyFn(property.id, !hideProperty);
+      if (data) {
+        setHideProperty(!hideProperty);
+      }
+    }
+  };
 
   const [ownerBlocked, setOwnerBlocked] = React.useState(false);
+
+  const [hideProperty, setHideProperty] = useState(false);
 
   const ownerChange = (event, uid) => {
     setOwnerBlocked(event.target.checked);
@@ -223,6 +243,14 @@ const ViewProperty = () => {
                       variant="contained"
                     >
                       Update Property
+                    </Button>
+                    <Button
+                      startIcon={<HideSource />}
+                      color="secondary"
+                      onClick={handleHide}
+                      variant="contained"
+                    >
+                      {hideProperty === true ? "Show" : "Hide"} Property
                     </Button>
                     <Button
                       startIcon={<Delete />}
@@ -433,17 +461,8 @@ const ViewProperty = () => {
                             <Images images={report.images} />
                           </Grid>
                         ) : null}
-                        <Grid
-                          item
-                          xs={6}
-                          sx={{
-                            p: 3,
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <Box>{report.about}</Box>
+                        <Grid item xs={6} sx={{ p: 1.5 }}>
+                          <Typography sx={{ mb: 2 }}>{report.about}</Typography>
                           <HorizontalLinearStepper
                             report={report}
                             setReports={setReports}
